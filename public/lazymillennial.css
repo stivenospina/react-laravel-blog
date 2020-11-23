@@ -1,0 +1,54 @@
+/* stylesheet for the lazymillennial site */
+main {
+  margin-left: 5%;
+  margin-right: 5%;
+}   
+@media screen and (min-width: 768px) {
+  main {
+    margin-left: 15%;
+    margin-right: 15%;
+  } 
+  .vid-small {
+    margin-left: 17%;
+    margin-right: 17%;
+  }
+}
+.header-boot-copy {
+  font-size: 25px;
+}
+.header-small-img {
+	width: 200px
+}
+ul.nav a:hover {
+ color: #CC0000 !important; 
+  }
+  h1 {
+  	font-family:lobster;
+  }
+p {
+  font-size: 20px;
+  line-height: 2 !important;
+}     
+div.col-md a {
+  text-decoration: none;
+} 
+div.col-md a:hover {
+  color: #CC0000 !important;
+} 
+.transparent {
+  opacity: 0.3;
+}
+.img2rows {
+  width: 100%;
+}
+div.col-md a p {
+  line-height: 1.1 !important;
+  margin-top: 5px;
+}
+/* #disqus {
+          margin-left: 15%;
+          margin-right: 15%;
+} */
+div.new-article a {
+  text-decoration: none;
+}

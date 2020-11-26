@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ExperienceController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,16 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('projectIndex');
-});
 
-Route::get('/experiences', function () {
-    return view('experienceIndex');
-});
+Route::get('/', [ProjectController::class, 'index']);
+
+Route::resource('projects', ProjectController::class);
+Route::resource('experiences', ExperienceController::class);
 
 Route::get('/aboutme', function () {
-    return view('aboutme');
+    return view('aboutme', [ 'page' => 'aboutme']);
 });
 
 Auth::routes();

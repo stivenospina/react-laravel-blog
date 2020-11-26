@@ -22,30 +22,28 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <!-- Custom stylesheet lazymillennial.css -->
-    <link href="{{ asset('lazymillennial.css') }}" rel="stylesheet">
 
 </head>
 <body>
     <div id="app">
     <div class="text-center" style="padding: 1%;" id="top">
   	<div class="container" style="width: 50%">
-  		<div class="row align-items-center pr-md-5">
-        	<div class="col-md"><h1 class="text-nowrap float-md-right text-danger">a lazy</h1></div>
-      		<div class="col-md"><img src="{{ asset('photos/kyle2.jpg') }}" alt="Kyle" class="img-fluid rounded-circle header-small-img  border border-danger"></div>
-	      	<div class="col-md"><h1 class="float-md-left text-danger">millennial</h1></div>
+  		<div class="row align-items-center">
+        	<div class="col-md-12"><h1 class="text-nowrap text-danger">a lazy</h1></div>
+      		<div class="col-md-12"><img src="{{ asset('photos/kyle2.jpg') }}" alt="Kyle" class="rounded-circle header-small-img  border border-danger"></div>
+	      	<div class="col-md-12"><h1 class="text-danger">millennial</h1></div>
      	</div>
   	</div>
 </div>
 <ul class="nav justify-content-center header-boot-copy" >
     <li class="nav-item">
-      <a class="nav-link text-dark" id="projects" href="/">Projects</a>
+      <a class="nav-link @if(isset($page) && $page == 'projects') text-danger @else text-dark @endif" id="projects" href="/">Projects</a>
     </li>
   	<li class="nav-item">
-    	<a class="nav-link text-dark" id="quick_cash" href="/experiences">Experiences</a>
+    	<a class="nav-link @if(isset($page) && $page == 'experiences') text-danger @else text-dark @endif" id="quick_cash" href="/experiences">Experiences</a>
   	</li>
     <li class="nav-item">
-    	<a class="nav-link text-dark" id="about_me" href="/aboutme">About Me</a>
+    	<a class="nav-link @if(isset($page) && $page == 'aboutme') text-danger @else text-dark @endif" id="about_me" href="/aboutme">About Me</a>
   	</li>
     <li class="nav-item">
       <a class="nav-link text-dark" id="contact" href="http://kyleweb.dev">Web Dev</a>

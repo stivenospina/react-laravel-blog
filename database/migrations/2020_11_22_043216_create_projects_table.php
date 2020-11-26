@@ -16,8 +16,9 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->varchar('name')
-            $table->text('project_flow'); // this will contain a casted array containing the project data photo link, and the text. The order of this will be used by the front end template to show a project
+            $table->string('name');
+            $table->string('mainPhoto');
+            $table->text('projectFlow'); // this will contain a casted array containing the project photos, videos, and paragraphs. The order of this will be used by the front end template to show a project. [['photo4' => 'storage/photos/photo.jpg'],[],[]]
         });
     }
 

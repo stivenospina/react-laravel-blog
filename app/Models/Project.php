@@ -9,7 +9,7 @@ class Project extends Model
 {
     use HasFactory;
 
-    Protected $cast = [
-        'project_flow' => 'array'
+    protected $casts = [
+        'projectFlow' => 'array'
     ];
 }

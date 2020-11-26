@@ -65802,6 +65802,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.js");
 
+__webpack_require__(/*! ./components/Flow */ "./resources/js/components/Flow.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -65885,6 +65887,348 @@ function Example() {
 
 if (document.getElementById('example')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Example, null), document.getElementById('example'));
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/Flow.js":
+/*!*****************************************!*\
+  !*** ./resources/js/components/Flow.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+var Flow = /*#__PURE__*/function (_React$Component) {
+  _inherits(Flow, _React$Component);
+
+  var _super = _createSuper(Flow);
+
+  function Flow(props) {
+    var _this;
+
+    _classCallCheck(this, Flow);
+
+    _this = _super.call(this, props);
+    _this.handleNewType = _this.handleNewType.bind(_assertThisInitialized(_this));
+    _this.handleTextChange = _this.handleTextChange.bind(_assertThisInitialized(_this));
+    _this.handleFlowSubmit = _this.handleFlowSubmit.bind(_assertThisInitialized(_this));
+    _this.flowForm = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.state = {
+      id: '',
+      flowArr: [],
+      newType: ''
+    };
+    return _this;
+  }
+
+  _createClass(Flow, [{
+    key: "handleNewType",
+    value: function handleNewType(newType) {
+      switch (newType) {
+        case 'paragraph':
+          this.setState(function (state) {
+            return state.flowArr.push({
+              type: 'paragraph',
+              value: ''
+            });
+          });
+          break;
+
+        case 'one':
+          this.setState(function (state) {
+            return state.flowArr.push({
+              type: 'one',
+              value1: ''
+            });
+          });
+          break;
+
+        case 'two':
+          // NOTE: COPY THE NEW ARRAY BELOW TO THE REST
+          this.setState(function (state) {
+            return state.flowArr.push({
+              type: 'two',
+              value1: ''
+            });
+          });
+          break;
+
+        case 'four':
+          this.setState(function (state) {
+            return state.flowArr.push({
+              type: 'four',
+              value1: ''
+            });
+          });
+          break;
+
+        case 'video':
+          this.setState(function (state) {
+            return state.flowArr.push({
+              type: 'video',
+              value1: ''
+            });
+          });
+          break;
+      }
+    }
+  }, {
+    key: "handleTextChange",
+    value: function handleTextChange(index, e) {
+      var stateArr = this.state.flowArr.slice(); // sliced to protect against state mutations
+
+      stateArr[index].value = e.target.value;
+      this.setState({
+        flowarr: stateArr
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // grab the current project flow data passed in through the hidden input
+      var flowData = JSON.parse(document.getElementById('flow-data').value);
+      this.setState({
+        flowArr: flowData
+      }); // get the project ID
+
+      var projectId = document.getElementById('project-id').value;
+      this.setState({
+        id: projectId
+      });
+    }
+  }, {
+    key: "handleFlowSubmit",
+    value: function handleFlowSubmit(e) {
+      event.preventDefault(); // initiate a form object then get the files in the form flowForm since these are uncontrolled components using the normal DOM and not react components
+
+      var formObject = new FormData(flowForm); // this is needed so that Laravel correctly parses the form data obj sent through PUT method
+
+      formObject.append('_method', 'PUT'); // add the flow array but needs to be stringified for use with FormData object
+
+      formObject.append('flowArr', JSON.stringify(this.state.flowArr));
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/projects/' + this.state.id, formObject).then(function (res) {
+        console.log(res);
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      // create an array of element components
+      var flowInputs = this.state.flowArr.map(function (item, index) {
+        if (item.type == 'paragraph') {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+            className: "form-control my-3",
+            value: item.value,
+            key: index,
+            onChange: function onChange(e) {
+              return _this2.handleTextChange(index, e);
+            }
+          });
+        } else if (item.type == 'video') {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+            className: "form-control my-3",
+            value: _this2.state.flowArr[index].video,
+            key: index,
+            onChange: function onChange(e) {
+              return _this2.handleTextChange(index, e);
+            }
+          });
+        } else if (item.type == 'one') {
+          if (item.value1 == '') {
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              type: "file",
+              className: "my-2",
+              key: index,
+              name: 'file_' + index.toString() + "_1"
+            });
+          } else {
+            return (
+              /*#__PURE__*/
+              // if the item has already been uploaded, show the photo instead of browse
+              react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                "class": "row justify-content-center my-3",
+                key: index
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+                src: _this2.state.flowArr[index].value1
+              }))
+            );
+          }
+        } else if (item.type == 'two') {
+          if (item.value1 == '') {
+            // Below, dynamic refs are set using string literal template
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "my-3",
+              key: index
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              type: "file",
+              name: 'file_' + index.toString() + "_1"
+            }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              type: "file",
+              name: 'file_' + index.toString() + "_2"
+            }));
+          } else {
+            return (
+              /*#__PURE__*/
+              // if already uploaded, show the files instead of inputs
+              react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                className: "row justify-content-center my-3",
+                key: index
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                className: "col-md-6"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+                src: _this2.state.flowArr[index].value1
+              })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                className: "col-md-6"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+                src: _this2.state.flowArr[index].value2
+              })))
+            );
+          }
+        } else if (item.type == 'four') {
+          if (item.value1 == '') {
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              key: index
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              type: "file",
+              name: 'file_' + index.toString() + "_1"
+            }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              type: "file",
+              name: 'file_' + index.toString() + "_2"
+            }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              type: "file",
+              name: 'file_' + index.toString() + "_3"
+            }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              type: "file",
+              name: 'file_' + index.toString() + "_4"
+            }));
+          } else {
+            return (
+              /*#__PURE__*/
+              // if already uploaded, show the files instead of inputs
+              react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                key: index
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                className: "row justify-content-center my-3"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                className: "col-md-6"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+                src: _this2.state.flowArr[index].value1
+              })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                className: "col-md-6"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+                src: _this2.state.flowArr[index].value2
+              }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                className: "row justify-content-center mb-3"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                className: "col-md-6"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+                src: _this2.state.flowArr[index].value3
+              })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                className: "col-md-6"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+                src: _this2.state.flowArr[index].value4
+              }))))
+            );
+          }
+        }
+      });
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row justify-content-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-md-8"
+      }, flowInputs, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dropdown text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-secondary dropdown-toggle",
+        type: "button",
+        id: "dropdownMenuButton",
+        "data-toggle": "dropdown",
+        "aria-haspopup": "true",
+        "aria-expanded": "false"
+      }, "Add New Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dropdown-menu",
+        "aria-labelledby": "dropdownMenuButton"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dropdown-item",
+        onClick: function onClick() {
+          return _this2.handleNewType('paragraph');
+        }
+      }, "Paragraph"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dropdown-item",
+        onClick: function onClick() {
+          return _this2.handleNewType('one');
+        }
+      }, "Single Photo"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dropdown-item",
+        onClick: function onClick() {
+          return _this2.handleNewType('two');
+        }
+      }, "Two Photo Group"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dropdown-item",
+        onClick: function onClick() {
+          return _this2.handleNewType('four');
+        }
+      }, "Four Photo Group"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dropdown-item",
+        onClick: function onClick() {
+          return _this2.handleNewType('video');
+        }
+      }, "Single Video"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row justify-content-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleFlowSubmit,
+        className: "btn btn-primary text-center mt-3"
+      }, "Save Changes to Flow")));
+    }
+  }]);
+
+  return Flow;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Flow);
+
+if (document.getElementById('flow')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Flow, null), document.getElementById('flow'));
 }
 
 /***/ }),

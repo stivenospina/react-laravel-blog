@@ -10,8 +10,8 @@ class Flow extends React.Component {
         this.handleFlowSubmit = this.handleFlowSubmit.bind(this);
         this.flowForm = React.createRef();
         this.state = {
-            id: '',
-            flowArr: [],
+            project: {},
+            items: [],
             newType: '',
         };
     }
@@ -20,38 +20,39 @@ class Flow extends React.Component {
 
         switch (newType) {
             case 'paragraph':
-                this.setState((state) => state.flowArr.push({type: 'paragraph', value: ''}));
+                this.setState((state) => state.items.push({type: 'paragraph', data: ''}));
                 break;
             case 'one':
-                this.setState((state) => state.flowArr.push({type: 'one', value1: ''}));
+                this.setState((state) => state.items.push({type: 'one', photos: []}));
                 break;
             case 'two':
-                // NOTE: COPY THE NEW ARRAY BELOW TO THE REST
-                this.setState((state) => state.flowArr.push({type: 'two', value1: ''}));
+                this.setState((state) => state.items.push({type: 'two', photos: []}));
                 break;
             case 'four':
-                this.setState((state) => state.flowArr.push({type: 'four', value1: ''}));
+                this.setState((state) => state.items.push({type: 'four', photos: []}));
                 break;
             case 'video':
-                this.setState((state) => state.flowArr.push({type: 'video', value1: ''}));
+                this.setState((state) => state.items.push({ type: 'video', data: 'https://www.youtube.com/embed/VTz27hHfxvU'}));
                 break;
         }
     }
 
     handleTextChange(index, e) {
-        let stateArr = this.state.flowArr.slice(); // sliced to protect against state mutations
-        stateArr[index].value = e.target.value;
-        this.setState({flowarr: stateArr});
+        let stateArr = this.state.items.slice(); // sliced to protect against state mutations
+        stateArr[index].data = e.target.value;
+        this.setState({items: stateArr});
     }
 
     componentDidMount() {
-        // grab the current project flow data passed in through the hidden input
-        let flowData = JSON.parse(document.getElementById('flow-data').value);
-        this.setState({flowArr: flowData});
+        // grab the current project data passed in through the hidden input
+        let project = JSON.parse(document.getElementById('project-data').value);
+        this.setState({project: project});
 
-        // get the project ID
-        let projectId = document.getElementById('project-id').value;
-        this.setState({id: projectId});
+        // grab the current project items data passed in through the hidden input
+        let items = JSON.parse(document.getElementById('items-data').value);
+        this.setState({items: items});
+
+        console.log('items: ', items);
     }
 
     handleFlowSubmit(e) {
@@ -64,10 +65,18 @@ class Flow extends React.Component {
         // this is needed so that Laravel correctly parses the form data obj sent through PUT method
         formObject.append('_method', 'PUT');
 
-        // add the flow array but needs to be stringified for use with FormData object
-        formObject.append('flowArr', JSON.stringify(this.state.flowArr));
+        // add an order and project id to the array to be sent to back end
+        let itemsArrOrdered = this.state.items.map((item, index) => {
+            item['order'] = index + 1;
+            item['project_id'] = this.state.project.id;
+            return item;
+        })
+
+       
+        // add the items array but needs to be stringified for use with FormData object
+        formObject.append('items', JSON.stringify(this.state.items));
         
-        Axios.post('/projects/' + this.state.id, formObject)
+        Axios.post('/projects/' + this.state.project.id, formObject)
             .then(res => {console.log(res)})
             .catch(err => {console.log(err)})
         
@@ -75,33 +84,35 @@ class Flow extends React.Component {
     render() {
 
         // create an array of element components
-        let flowInputs = this.state.flowArr.map((item, index) => {
+        let flowInputs = this.state.items.map((item, index) => {
 
             if (item.type == 'paragraph') {
-                return <textarea className="form-control my-3" value={item.value} key={index} onChange={(e) => this.handleTextChange(index, e)}></textarea>;
+                return <textarea className="form-control my-3" value={item.data} key={index} onChange={(e) => this.handleTextChange(index, e)}></textarea>;
 
             } else if (item.type == 'video') {
-                return <textarea className="form-control my-3" value={this.state.flowArr[index].video} key={index} onChange={(e) => this.handleTextChange(index, e)}></textarea>;
+                return <textarea className="form-control my-3" value={item.data} key={index} onChange={(e) => this.handleTextChange(index, e)}></textarea>;
 
             } else if (item.type == 'one') {
-                if (item.value1 == '') {
-                    return <input type="file" className="my-2" key={index} name={'file_' + index.toString() + "_1"}/>;
+                if (item.photos.length == 0) {
+                    return <input type="file" className="my-2" key={index} name={'file_' + index.toString() + "_1"} required/>;
                 } else {
                     return (
                         // if the item has already been uploaded, show the photo instead of browse
-                        <div class="row justify-content-center my-3" key={index}>
-                            <img src={this.state.flowArr[index].value1} />
+                        <div className="row justify-content-center my-3" key={index}>
+                            <div className="col-12">
+                                <img src={this.state.items[index].photos[0]} className="img-fluid border"/>
+                            </div>
                         </div>
                     );
                 }
 
             } else if (item.type == 'two') {
-                if (item.value1 == '') {
-                    // Below, dynamic refs are set using string literal template
+                if (item.photos.length == 0) {
+                    
                     return (
                         <div className="my-3" key={index}>
-                            <input type="file" name={'file_' + index.toString() + "_1"}></input>
-                            <input type="file" name={'file_' + index.toString() + "_2"}></input>
+                            <input type="file" name={'file_' + index.toString() + "_1"} required></input>
+                            <input type="file" name={'file_' + index.toString() + "_2"} required></input>
                         </div>
                     );
                 } else {
@@ -110,43 +121,43 @@ class Flow extends React.Component {
                     // if already uploaded, show the files instead of inputs
                     <div className="row justify-content-center my-3" key={index}>
                         <div className="col-md-6">
-                            <img src={this.state.flowArr[index].value1} />
+                            <img src={this.state.items[index].photos[0]} className="img-fluid border"/>
                         </div>
                         <div className="col-md-6">
-                            <img src={this.state.flowArr[index].value2} />
+                            <img src={this.state.items[index].photos[1]} className="img-fluid border"/>
                         </div>
                     </div>
                 );
                 }
 
             } else if (item.type == 'four') {
-                if (item.value1 == '') {
+                if (item.photos.length == 0) {
                     return (
                         <div key={index}>
-                            <input type="file" name={'file_' + index.toString() + "_1"}></input>
-                            <input type="file" name={'file_' + index.toString() + "_2"}></input>
-                            <input type="file" name={'file_' + index.toString() + "_3"}></input>
-                            <input type="file" name={'file_' + index.toString() + "_4"}></input>
+                            <input type="file" name={'file_' + index.toString() + "_1"} required></input>
+                            <input type="file" name={'file_' + index.toString() + "_2"} required></input>
+                            <input type="file" name={'file_' + index.toString() + "_3"} required></input>
+                            <input type="file" name={'file_' + index.toString() + "_4"} required></input>
                         </div>
                     );
                 } else {
                     return (
                         // if already uploaded, show the files instead of inputs
                         <div key={index}>
-                            <div className="row justify-content-center my-3">
+                            <div className="row justify-content-center my-4">
                                 <div className="col-md-6">
-                                    <img src={this.state.flowArr[index].value1} />
+                                    <img src={this.state.items[index].photos[0]} className="img-fluid border"/>
                                 </div>
                                 <div className="col-md-6">
-                                    <img src={this.state.flowArr[index].value2} />
+                                    <img src={this.state.items[index].photos[1]} className="img-fluid border"/>
                                 </div>
                             </div>
                             <div className="row justify-content-center mb-3">
                                 <div className="col-md-6">
-                                    <img src={this.state.flowArr[index].value3} />
+                                    <img src={this.state.items[index].photos[2]} className="img-fluid border"/>
                                 </div>
                                 <div className="col-md-6">
-                                    <img src={this.state.flowArr[index].value4} />
+                                    <img src={this.state.items[index].photos[3]} className="img-fluid border"/>
                                 </div>
                             </div>
                         </div>

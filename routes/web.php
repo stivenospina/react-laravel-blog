@@ -20,7 +20,8 @@ use App\Http\Controllers\ExperienceController;
 Route::get('/', [ProjectController::class, 'index']);
 
 Route::resource('projects', ProjectController::class);
-Route::resource('experiences', ExperienceController::class);
+
+Route::get('/experiences', [ProjectController::class, 'experiencesIndex']);
 
 Route::get('/aboutme', function () {
     return view('aboutme', [ 'page' => 'aboutme']);

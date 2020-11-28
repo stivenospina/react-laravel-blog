@@ -65948,8 +65948,8 @@ var Flow = /*#__PURE__*/function (_React$Component) {
     _this.handleFlowSubmit = _this.handleFlowSubmit.bind(_assertThisInitialized(_this));
     _this.flowForm = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.state = {
-      id: '',
-      flowArr: [],
+      project: {},
+      items: [],
       newType: ''
     };
     return _this;
@@ -65961,46 +65961,45 @@ var Flow = /*#__PURE__*/function (_React$Component) {
       switch (newType) {
         case 'paragraph':
           this.setState(function (state) {
-            return state.flowArr.push({
+            return state.items.push({
               type: 'paragraph',
-              value: ''
+              data: ''
             });
           });
           break;
 
         case 'one':
           this.setState(function (state) {
-            return state.flowArr.push({
+            return state.items.push({
               type: 'one',
-              value1: ''
+              photos: []
             });
           });
           break;
 
         case 'two':
-          // NOTE: COPY THE NEW ARRAY BELOW TO THE REST
           this.setState(function (state) {
-            return state.flowArr.push({
+            return state.items.push({
               type: 'two',
-              value1: ''
+              photos: []
             });
           });
           break;
 
         case 'four':
           this.setState(function (state) {
-            return state.flowArr.push({
+            return state.items.push({
               type: 'four',
-              value1: ''
+              photos: []
             });
           });
           break;
 
         case 'video':
           this.setState(function (state) {
-            return state.flowArr.push({
+            return state.items.push({
               type: 'video',
-              value1: ''
+              data: 'https://www.youtube.com/embed/VTz27hHfxvU'
             });
           });
           break;
@@ -66009,38 +66008,47 @@ var Flow = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleTextChange",
     value: function handleTextChange(index, e) {
-      var stateArr = this.state.flowArr.slice(); // sliced to protect against state mutations
+      var stateArr = this.state.items.slice(); // sliced to protect against state mutations
 
-      stateArr[index].value = e.target.value;
+      stateArr[index].data = e.target.value;
       this.setState({
-        flowarr: stateArr
+        items: stateArr
       });
     }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      // grab the current project flow data passed in through the hidden input
-      var flowData = JSON.parse(document.getElementById('flow-data').value);
+      // grab the current project data passed in through the hidden input
+      var project = JSON.parse(document.getElementById('project-data').value);
       this.setState({
-        flowArr: flowData
-      }); // get the project ID
+        project: project
+      }); // grab the current project items data passed in through the hidden input
 
-      var projectId = document.getElementById('project-id').value;
+      var items = JSON.parse(document.getElementById('items-data').value);
       this.setState({
-        id: projectId
+        items: items
       });
+      console.log('items: ', items);
     }
   }, {
     key: "handleFlowSubmit",
     value: function handleFlowSubmit(e) {
+      var _this2 = this;
+
       event.preventDefault(); // initiate a form object then get the files in the form flowForm since these are uncontrolled components using the normal DOM and not react components
 
       var formObject = new FormData(flowForm); // this is needed so that Laravel correctly parses the form data obj sent through PUT method
 
-      formObject.append('_method', 'PUT'); // add the flow array but needs to be stringified for use with FormData object
+      formObject.append('_method', 'PUT'); // add an order and project id to the array to be sent to back end
 
-      formObject.append('flowArr', JSON.stringify(this.state.flowArr));
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/projects/' + this.state.id, formObject).then(function (res) {
+      var itemsArrOrdered = this.state.items.map(function (item, index) {
+        item['order'] = index + 1;
+        item['project_id'] = _this2.state.project.id;
+        return item;
+      }); // add the items array but needs to be stringified for use with FormData object
+
+      formObject.append('items', JSON.stringify(this.state.items));
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/projects/' + this.state.project.id, formObject).then(function (res) {
         console.log(res);
       })["catch"](function (err) {
         console.log(err);
@@ -66049,60 +66057,65 @@ var Flow = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       // create an array of element components
-      var flowInputs = this.state.flowArr.map(function (item, index) {
+      var flowInputs = this.state.items.map(function (item, index) {
         if (item.type == 'paragraph') {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
             className: "form-control my-3",
-            value: item.value,
+            value: item.data,
             key: index,
             onChange: function onChange(e) {
-              return _this2.handleTextChange(index, e);
+              return _this3.handleTextChange(index, e);
             }
           });
         } else if (item.type == 'video') {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
             className: "form-control my-3",
-            value: _this2.state.flowArr[index].video,
+            value: item.data,
             key: index,
             onChange: function onChange(e) {
-              return _this2.handleTextChange(index, e);
+              return _this3.handleTextChange(index, e);
             }
           });
         } else if (item.type == 'one') {
-          if (item.value1 == '') {
+          if (item.photos.length == 0) {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
               type: "file",
               className: "my-2",
               key: index,
-              name: 'file_' + index.toString() + "_1"
+              name: 'file_' + index.toString() + "_1",
+              required: true
             });
           } else {
             return (
               /*#__PURE__*/
               // if the item has already been uploaded, show the photo instead of browse
               react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                "class": "row justify-content-center my-3",
+                className: "row justify-content-center my-3",
                 key: index
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                className: "col-12"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-                src: _this2.state.flowArr[index].value1
-              }))
+                src: _this3.state.items[index].photos[0],
+                className: "img-fluid border"
+              })))
             );
           }
         } else if (item.type == 'two') {
-          if (item.value1 == '') {
-            // Below, dynamic refs are set using string literal template
+          if (item.photos.length == 0) {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
               className: "my-3",
               key: index
             }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
               type: "file",
-              name: 'file_' + index.toString() + "_1"
+              name: 'file_' + index.toString() + "_1",
+              required: true
             }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
               type: "file",
-              name: 'file_' + index.toString() + "_2"
+              name: 'file_' + index.toString() + "_2",
+              required: true
             }));
           } else {
             return (
@@ -66114,30 +66127,36 @@ var Flow = /*#__PURE__*/function (_React$Component) {
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
                 className: "col-md-6"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-                src: _this2.state.flowArr[index].value1
+                src: _this3.state.items[index].photos[0],
+                className: "img-fluid border"
               })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
                 className: "col-md-6"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-                src: _this2.state.flowArr[index].value2
+                src: _this3.state.items[index].photos[1],
+                className: "img-fluid border"
               })))
             );
           }
         } else if (item.type == 'four') {
-          if (item.value1 == '') {
+          if (item.photos.length == 0) {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
               key: index
             }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
               type: "file",
-              name: 'file_' + index.toString() + "_1"
+              name: 'file_' + index.toString() + "_1",
+              required: true
             }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
               type: "file",
-              name: 'file_' + index.toString() + "_2"
+              name: 'file_' + index.toString() + "_2",
+              required: true
             }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
               type: "file",
-              name: 'file_' + index.toString() + "_3"
+              name: 'file_' + index.toString() + "_3",
+              required: true
             }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
               type: "file",
-              name: 'file_' + index.toString() + "_4"
+              name: 'file_' + index.toString() + "_4",
+              required: true
             }));
           } else {
             return (
@@ -66146,25 +66165,29 @@ var Flow = /*#__PURE__*/function (_React$Component) {
               react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
                 key: index
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                className: "row justify-content-center my-3"
+                className: "row justify-content-center my-4"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
                 className: "col-md-6"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-                src: _this2.state.flowArr[index].value1
+                src: _this3.state.items[index].photos[0],
+                className: "img-fluid border"
               })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
                 className: "col-md-6"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-                src: _this2.state.flowArr[index].value2
+                src: _this3.state.items[index].photos[1],
+                className: "img-fluid border"
               }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
                 className: "row justify-content-center mb-3"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
                 className: "col-md-6"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-                src: _this2.state.flowArr[index].value3
+                src: _this3.state.items[index].photos[2],
+                className: "img-fluid border"
               })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
                 className: "col-md-6"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-                src: _this2.state.flowArr[index].value4
+                src: _this3.state.items[index].photos[3],
+                className: "img-fluid border"
               }))))
             );
           }
@@ -66191,27 +66214,27 @@ var Flow = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dropdown-item",
         onClick: function onClick() {
-          return _this2.handleNewType('paragraph');
+          return _this3.handleNewType('paragraph');
         }
       }, "Paragraph"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dropdown-item",
         onClick: function onClick() {
-          return _this2.handleNewType('one');
+          return _this3.handleNewType('one');
         }
       }, "Single Photo"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dropdown-item",
         onClick: function onClick() {
-          return _this2.handleNewType('two');
+          return _this3.handleNewType('two');
         }
       }, "Two Photo Group"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dropdown-item",
         onClick: function onClick() {
-          return _this2.handleNewType('four');
+          return _this3.handleNewType('four');
         }
       }, "Four Photo Group"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dropdown-item",
         onClick: function onClick() {
-          return _this2.handleNewType('video');
+          return _this3.handleNewType('video');
         }
       }, "Single Video"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row justify-content-center"

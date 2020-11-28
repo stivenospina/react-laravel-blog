@@ -1,64 +1,106 @@
 /* stylesheet for the lazymillennial site */
-main {
-	margin-left: 5%;
-	margin-right: 5%;
-  }   
-  @media screen and (min-width: 768px) {
-	main {
-	  margin-left: 15%;
-	  margin-right: 15%;
-	} 
-	.vid-small {
-	  margin-left: 17%;
-	  margin-right: 17%;
+
+
+.video-sm {
+	height: 480px !important;
+	width: 640px !important;
+}
+
+@media screen and (max-width: 768px) {
+
+	.video-sm {
+		height: 330px !important;
 	}
-  }
-  .header-boot-copy {
+	
+}
+
+.header-boot-copy {
 	font-size: 25px;
-  }
-  .header-small-img {
-	  width: 150px
-  }
-  ul.nav a:hover {
-   color: #CC0000 !important; 
-	}
-	h1 {
-		font-family:lobster;
-	}
-  p {
+}
+
+.header-small-img {
+	width: 150px
+}
+
+ul.nav a:hover {
+	color: #CC0000 !important; 
+}
+
+h1 {
+	font-family:lobster;
+}
+
+p {
 	font-size: 20px;
 	line-height: 2 !important;
-  }     
-  div.col-md a {
+}   
+
+div.col-md a {
 	text-decoration: none;
-  } 
-  div.col-md a:hover {
+} 
+
+div.col-md a:hover {
 	color: #CC0000 !important;
-  } 
-  .transparent {
+} 
+
+.transparent {
 	opacity: 0.3;
-  }
-  .img2rows {
-	width: 100%;
-  }
-  div.col-md a p {
+}
+
+.img2rows {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translateY(-50%) translateX(-50%);
+	-moz-transform: translateY(-50%) translateX(-50%);
+	-ms-transform: translateY(-50%) translateX(-50%);
+	-webkit-transform: translateY(-50%) translateX(-50%);
+
+	height: 100%;
+}
+
+.square-wrapper {
+	position: relative;
+	overflow-x: hidden;	
+	height: 270px;
+	width: 270px;
+}
+
+.square-wrapper:hover {
+	border-color: #CC0000 !important;
+}
+
+.link-to-project:hover {
+	text-decoration: none;
+}
+
+div.col-md a p {
 	line-height: 1.1 !important;
 	margin-top: 5px;
-  }
-  /* #disqus {
-			margin-left: 15%;
-			margin-right: 15%;
-  } */
-  div.new-article a {
+}
+
+/* #disqus {
+		margin-left: 15%;
+		margin-right: 15%;
+} */
+
+div.new-article a {
 	text-decoration: none;
-  }
+}
 
+#main-photo-edit {
+	max-width: 200px;
+}
 
-
-  #main-photo-edit {
-	  max-width: 200px;
-  }
-  
-  .dropdown-item:hover {
+.dropdown-item:hover {
 	cursor: pointer;
-  }
+}
+
+.paragraph {
+	text-indent: 20px;
+}
+
+.index-header {
+	font-family: lobster;
+	font-size: 50px;
+}

@@ -9,7 +9,8 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $casts = [
-        'projectFlow' => 'array'
-    ];
+    public function Item() {
+
+        return $this->hasMany('\App\Models\Item');
+    }
 }

@@ -18,7 +18,7 @@ class CreateProjectsTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('mainPhoto');
-            $table->text('projectFlow'); // this will contain a casted array containing the project photos, videos, and paragraphs. The order of this will be used by the front end template to show a project. [['photo4' => 'storage/photos/photo.jpg'],[],[]]
+            $table->string('projOrExp')->nullable();
         });
     }
 

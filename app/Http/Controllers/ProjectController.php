@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Models\Item;
 
 class ProjectController extends Controller
 {
@@ -12,9 +13,19 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        return view('projects.index', [ 'page' => 'projects']);
+        $projectsList = Project::where('projOrExp', '=', 'project')->get();
+
+        return view('projects.index', ['page' => 'projects', 'projects' => $projectsList]);
+    }
+
+    public function experiencesIndex()
+    {
+        $experiencesList = Project::where('projOrExp','=','experience')->get();
+
+        return view('projects.index', [ 'page' => 'experiences', 'projects' => $experiencesList]);
     }
 
     /**
@@ -38,9 +49,9 @@ class ProjectController extends Controller
         // NOTE: NEEDS TO BE VALIDATED
         $newProject = new Project;
         $newProject->name = $request->input('name');
-        $newProject->projectFlow = [];
+        $newProject->projOrExp = $request->input('proj-or-exp');
 
-        // validate then handle the file
+        // check if a photo was sent then handle the file
         if ($request->hasFile('main-photo')) {
             $mainPhoto = $request->file('main-photo');
             $path = $mainPhoto->store('public/images');
@@ -62,7 +73,9 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        $page = 'projects';
+
+        return view('projects.show', compact('page','project'));
     }
 
     /**
@@ -73,7 +86,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('projects.edit', $project);
+        
+        return view('projects.edit', [ 'project' => $project ]);
     }
 
     /**
@@ -93,6 +107,7 @@ class ProjectController extends Controller
 
 
             $project->name = $request->input('name');
+            $project->projOrExp = $request->input('proj-or-exp');
 
             // validate then handle the file
             if ($request->hasFile('main-photo')) {
@@ -109,68 +124,82 @@ class ProjectController extends Controller
 
         } else {
 
-            // This is a change to the flow array, handle it
+            // This is a change to the project flow, handle it
 
 
             // get the stringified json flow array
             // decode the stringified json array sent by axios with FormData so that it can be used in PHP
-            $reqFlowArr = json_decode($request->input('flowArr'), true);
+            $reqItemsArr = json_decode($request->input('items'), true);
+
+            
 
             // get an array of all the files sent in the request
             $files = $request->file();
-
-
-            $currentFlowArr = $project->projectFlow;
-            forEach($reqFlowArr as $key => $item) {
-
-                if (!isset($currentFlowArr[$key]) || $currentFlowArr[$key] != $reqFlowArr[$key]) {
-                    // create/clear then update the value if it is a paragraph or video
-                } else {
-                    //skip this, it's 
-                }
-            }
             
-            // below doesn't work because it gets the array out of order
 
-            /*
+            // get the most up to date items array for this project from DB
+            $currentItemsArr = $project->Item->sortBy('order');
+            
 
-            // handle files by storing them and saving their path to the flow array with eloquent
-            if (count($files) > 0) {
-                foreach ($files as $key => $file) {
-                    //get the index and which value it should be
-                    $fileSplitArr = preg_split("/_/", $key);
+            
+            // handle each of the flow items sent in the request
+            forEach($reqItemsArr as $key => $item) {
+                
+                // handle the creation/update of each type of item
+                switch ($item['type']) {
+                    case 'paragraph':
+                    case 'video':
 
-                    
-                    $fileIndex = intval($fileSplitArr[1]);
-                    $photoNum = intval($fileSplitArr[2]);
+                        // updateOrCreate checks to see if item exists, updades it, or creates it if not
+                        Item::updateOrCreate(
+                            ['project_id' => $project->id, 'order' => $item['order']],
+                            [
+                                'data' => $reqItemsArr[$key]['data'],
+                                'project_id' => $project->id,
+                                'type' => $reqItemsArr[$key]['type'],
+                                'order' => $reqItemsArr[$key]['order']
+                            ]
+                        );
+                        break;
+                    case 'one':
+                    case 'two':   
+                    case 'four':
+                        // check to see if this is a new item or existing
+                        if (empty($item['photos'])) {
+                            // handle photo upload
+                            
+                            // how many photo file should there be?
+                            if ($item['type'] == 'one') {
+                                $numberOfFiles = 1;
+                            } else if ($item['type'] == 'two') {
+                                $numberOfFiles = 2;
+                            } else if ($item['type'] == 'four') {
+                                $numberOfFiles = 4;
+                            }
 
-                    
-                    // store the image with the temp name and get the path then fix it
-                    $path = $file->store('public/images');
-                    $pathModified = str_replace('public','storage', $path); // store the correct dir
+                            $photoPathsArr = [];
 
-                    // add the new index to the flow array
-                        $castedArr = $project->projectFlow; // neccessary step due to array casting
+                            for ($i = 1; $i <= $numberOfFiles; $i++) {
+                                // store the image with the temp name and get the path then fix it
+                                $file = $request->file('file_' . strval($item['order'] - 1) . "_{$i}");
+                                $path = $file->store('public/images');
+                                $pathModified = str_replace('public','/storage', $path); // store the correct dir
+                                $photoPathsArr[] = $pathModified;
+                            }
 
-                        // set new array if it doesn't exist already and  update the project flow array
-                        if (!isset($castedArr[0])) {
-                            $castedArr[] = [ "value{$photoNum}" => $file];
-                        } else {
-                            $castedArr[$fileIndex][] = ["value{$photoNum}" => $pathModified];
+
+                            // create the new item in the db
+                            Item::updateOrCreate([
+                                'photos' => $photoPathsArr,
+                                'project_id' => $project->id,
+                                'type' => $reqItemsArr[$key]['type'],
+                                'order' => $reqItemsArr[$key]['order']
+                            ]);
                         }
-
-                        $project->projectFlow = $castedArr;
+                        break;
                 }
+                
             }
-            
-            // handle the paragraphs and videos
-
-
-            // here make sure to save the project object
-
-            return dd($project);
-
-            */
         }
     }
 

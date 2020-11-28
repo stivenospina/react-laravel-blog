@@ -7,6 +7,16 @@
 			<form action="/projects" method="POST" class="form-group" enctype="multipart/form-data">
 				@csrf
 
+				<div class="text-center">
+					<label for="project"><h5>Project: </h5></label>
+					<input type="radio" name="proj-or-exp" value="project" class="mr-3" checked/>
+
+					<label for="project"><h5>Experience: </h5></label>
+					<input type="radio" name="proj-or-exp" value="experience" />
+				</div>
+				
+				<br>
+
 				<label for="name"><h5>Project Name:</h5></label>
 				<input id="name" name="name" type="text" class="form-control mb-4" required/>
 

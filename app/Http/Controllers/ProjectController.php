@@ -182,18 +182,22 @@ class ProjectController extends Controller
                             for ($i = 1; $i <= $numberOfFiles; $i++) {
                                 // store the image with the temp name and get the path then fix it
                                 $file = $request->file('file_' . strval($item['order'] - 1) . "_{$i}");
+                                
                                 $path = $file->store('public/images');
                                 $pathModified = str_replace('public','/storage', $path); // store the correct dir
                                 $photoPathsArr[] = $pathModified;
                             }
-
+                            
 
                             // create the new item in the db
-                            Item::updateOrCreate([
+                            Item::updateOrCreate(
+                                ['project_id' => $project->id, 'order' => $item['order']],
+                                [
                                 'photos' => $photoPathsArr,
                                 'project_id' => $project->id,
                                 'type' => $reqItemsArr[$key]['type'],
-                                'order' => $reqItemsArr[$key]['order']
+                                'order' => $reqItemsArr[$key]['order'],
+                                'data' => ''
                             ]);
                         }
                         break;

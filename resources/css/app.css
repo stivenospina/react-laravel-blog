@@ -19,7 +19,8 @@
 }
 
 .header-small-img {
-	width: 150px
+	width: 150px;
+	
 }
 
 ul.nav a:hover {
@@ -28,6 +29,7 @@ ul.nav a:hover {
 
 h1 {
 	font-family:lobster;
+	text-shadow: 5px 5px 5px lightgrey;
 }
 
 p {
@@ -103,4 +105,5 @@ div.new-article a {
 .index-header {
 	font-family: lobster;
 	font-size: 50px;
+	text-shadow: 5px 5px 5px lightgrey;
 }

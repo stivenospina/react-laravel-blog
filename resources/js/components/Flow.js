@@ -74,10 +74,15 @@ class Flow extends React.Component {
 
        
         // add the items array but needs to be stringified for use with FormData object
-        formObject.append('items', JSON.stringify(this.state.items));
+        formObject.append('items', JSON.stringify(itemsArrOrdered));
         
         Axios.post('/projects/' + this.state.project.id, formObject)
-            .then(res => {console.log(res)})
+            .then(res => {
+                if (res.data == 'success') {
+                    alert('Saved!');
+                    window.location.reload()
+                }
+            })
             .catch(err => {console.log(err)})
         
     }

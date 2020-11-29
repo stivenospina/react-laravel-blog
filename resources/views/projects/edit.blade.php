@@ -46,7 +46,7 @@
 	<hr class="my-4">
 	<div class="row justify-content-center">
         <div class="col-md-8">
-			<h2 class="text-center text-danger my-5">@if($project->projOrExp == 'project') Project @else Experience @endif Flow</h2>
+			<h2 class="text-center text-danger my-5">Flow of Items</h2>
 			
 				<form name="flowForm">
 

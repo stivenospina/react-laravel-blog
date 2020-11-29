@@ -230,4 +230,8 @@ return [
 
     ],
 
+    'ADMIN_NAME' => env('ADMIN_NAME'),
+    'ADMIN_EMAIL' => env('ADMIN_EMAIL'),
+    'ADMIN_PASS' => env('ADMIN_PASS'),
+
 ];

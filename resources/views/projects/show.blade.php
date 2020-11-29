@@ -3,8 +3,8 @@
 @section('edit/delete')
 {{-- This is the edit/delete links with show in the app.blade --}}
 <div id="edit-delete-buttons" class="mr-4 mt-1 pt-1"><a href="/projects/{{ $project->id }}/edit"><i class="far fa-edit mr-2 text-muted"></i></a>
-/
-<a href="delete" onclick="event.preventDefault(); document.getElementById('edit-form').submit();"><i class="far fa-trash-alt ml-2 text-muted"></i></a></div>
+    /
+    <a href="delete" onclick="event.preventDefault(); document.getElementById('edit-form').submit();"><i class="far fa-trash-alt ml-2 text-muted"></i></a></div>
 <form id="edit-form" action="/projects/{{ $project->id }}" method="POST" style="display: none;">
     @method('delete')
     @csrf
@@ -32,33 +32,47 @@
         @elseif($item->type == 'one')
         <div class="row justify-content-center my-5">
             <div class="col-md-10">
-                <img src="{{  $item->photos[0]  }}" class="img-fluid border rounded shadow" />
+                <a href="{{ $item->photos[0] }}">
+                    <img src="{{  $item->photos[0]  }}" class="img-fluid border rounded shadow" />
+                </a>
             </div>
         </div>
         @elseif($item->type == 'two')
         <div class="row justify-content-center my-5" key={index}>
             <div class="col-md-6">
-                <img src="{{  $item->photos[0]  }}" class="img-fluid border rounded shadow-sm" />
+                <a href="{{ $item->photos[0] }}">
+                    <img src="{{  $item->photos[0]  }}" class="img-fluid border rounded shadow-sm" />
+                </a>
             </div>
             <div class="col-md-6 mt-4 mt-md-0">
-                <img src="{{  $item->photos[1]  }}" class="img-fluid border rounded shadow-sm" />
+                <a href="{{ $item->photos[1] }}">
+                    <img src="{{  $item->photos[1]  }}" class="img-fluid border rounded shadow-sm" />
+                </a>
             </div>
         </div>
         @elseif($item->type == 'four')
         <div class="row justify-content-center mt-5 mb-4">
             <div class="col-md-6">
-                <img src="{{  $item->photos[0]  }}" class="img-fluid border rounded shadow-sm" />
+                <a href="{{ $item->photos[0] }}">
+                    <img src="{{  $item->photos[0]  }}" class="img-fluid border rounded shadow-sm" />
+                </a>
             </div>
             <div class="col-md-6 mt-4 mt-md-0">
-                <img src="{{  $item->photos[1]  }}" class="img-fluid border rounded shadow-sm" />
+                <a href="{{ $item->photos[1] }}">
+                    <img src="{{  $item->photos[1]  }}" class="img-fluid border rounded shadow-sm" />
+                </a>
             </div>
         </div>
         <div class="row justify-content-center mb-5 mt-1">
             <div class="col-md-6">
-                <img src="{{  $item->photos[2]  }}" class="img-fluid border rounded shadow-sm" />
+                <a href="{{ $item->photos[2] }}">
+                    <img src="{{  $item->photos[2]  }}" class="img-fluid border rounded shadow-sm" />
+                </a>
             </div>
             <div class="col-md-6 mt-4 mt-md-0">
-                <img src="{{  $item->photos[3]  }}" class="img-fluid border rounded shadow-sm" />
+                <a href="{{ $item->photos[3] }}">
+                    <img src="{{  $item->photos[3]  }}" class="img-fluid border rounded shadow-sm" />
+                </a>
             </div>
         </div>
         @endif

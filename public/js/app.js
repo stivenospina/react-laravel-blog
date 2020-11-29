@@ -66047,9 +66047,12 @@ var Flow = /*#__PURE__*/function (_React$Component) {
         return item;
       }); // add the items array but needs to be stringified for use with FormData object
 
-      formObject.append('items', JSON.stringify(this.state.items));
+      formObject.append('items', JSON.stringify(itemsArrOrdered));
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/projects/' + this.state.project.id, formObject).then(function (res) {
-        console.log(res);
+        if (res.data == 'success') {
+          alert('Saved!');
+          window.location.reload();
+        }
       })["catch"](function (err) {
         console.log(err);
       });

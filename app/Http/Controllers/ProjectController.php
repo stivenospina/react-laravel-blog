@@ -205,6 +205,8 @@ class ProjectController extends Controller
                 }
                 
             }
+
+            return 'success';
         }
     }
 

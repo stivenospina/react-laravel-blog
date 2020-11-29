@@ -157,7 +157,8 @@ class ProjectController extends Controller
                                 'data' => $reqItemsArr[$key]['data'],
                                 'project_id' => $project->id,
                                 'type' => $reqItemsArr[$key]['type'],
-                                'order' => $reqItemsArr[$key]['order']
+                                'order' => $reqItemsArr[$key]['order'],
+                                'photos' => []
                             ]
                         );
                         break;
@@ -215,6 +216,8 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $project->delete();
+
+        return redirect('/projects');
     }
 }

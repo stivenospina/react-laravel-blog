@@ -16,7 +16,7 @@
         @foreach($projects as $project)
         <div class="col-12 col-sm-6 col-lg-4 mt-4 text-center">
             <a href="projects/{{ $project->id }}" class="text-dark link-to-project">
-                <div class="square-wrapper border rounded mx-auto">
+                <div class="square-wrapper border rounded mx-auto shadow-sm">
                     <img src="{{ $project->mainPhoto }}" alt="{{ $project->name }}" class="img2rows">
                 </div>
                 <p>{{ $project->name }}</p>

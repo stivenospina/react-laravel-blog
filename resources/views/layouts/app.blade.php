@@ -16,6 +16,7 @@
   <!-- Fonts -->
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
   <!-- Google Lobster font -->
   <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
 
@@ -30,9 +31,11 @@
   <div id="app">
     @guest
     @else
-    <div class="row justify-content-end">
+    <div class="row justify-content-end mr-2">
+      @section('edit/delete')
+      @show
       <li class="nav dropdown d-block justify-content-end">
-        <a id="navbarDropdown" class="nav-link dropdown-toggle h4 text-dark mr-3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+        <a id="navbarDropdown" class="nav-link dropdown-toggle h4 text-muted mt-1 pr-4" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
           {{ Auth::user()->name }} <span class="caret"></span>
         </a>
 
@@ -52,7 +55,9 @@
         </div>
       </li>
     </div>
+
     @endguest
+
     <div class="text-center mt-2" style="padding: 1%;" id="top">
       <div class="container" style="width: 50%">
         <div class="row align-items-center">
@@ -85,6 +90,10 @@
     <main class="py-4">
       @yield('content')
     </main>
+
+    <div class="foot text-center my-4">
+      <h4 class="text-muted">kyleweb.dev</h4>
+    </div>
   </div>
 </body>
 

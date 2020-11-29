@@ -8,4 +8,7 @@
 @import '~bootstrap/scss/bootstrap';
 
 // Import the main css file
-@import '../css/app.css'
+@import '../css/app.css';
+
+// Import font awesome
+@import '../../node_modules/@fortawesome/fontawesome-free/css/all.css';

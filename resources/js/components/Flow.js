@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Axios from 'axios';
+import OrderDel from './OrderDel';
 
 class Flow extends React.Component {
     constructor(props) {
@@ -92,10 +93,24 @@ class Flow extends React.Component {
         let flowInputs = this.state.items.map((item, index) => {
 
             if (item.type == 'paragraph') {
-                return <textarea className="form-control my-3" value={item.data} key={index} onChange={(e) => this.handleTextChange(index, e)}></textarea>;
+                return (
+                    <div class="row justify-content-center no-gutters my-3">
+                        <div class="col-11">
+                            <textarea className="form-control h-100" value={item.data} key={index} onChange={(e) => this.handleTextChange(index, e)}></textarea>
+                        </div>
+                        <OrderDel />
+                    </div>
+                );
 
             } else if (item.type == 'video') {
-                return <textarea className="form-control my-3" value={item.data} key={index} onChange={(e) => this.handleTextChange(index, e)}></textarea>;
+                return (
+                    <div class="row justify-content-center no-gutters my-3">
+                        <div class="col-11">
+                            <textarea className="form-control h-100" value={item.data} key={index} onChange={(e) => this.handleTextChange(index, e)}></textarea>
+                        </div>
+                        <OrderDel />
+                    </div>
+                );
 
             } else if (item.type == 'one') {
                 if (item.photos.length == 0) {
@@ -103,10 +118,11 @@ class Flow extends React.Component {
                 } else {
                     return (
                         // if the item has already been uploaded, show the photo instead of browse
-                        <div className="row justify-content-center my-3" key={index}>
-                            <div className="col-12">
+                        <div className="row justify-content-center my-3 no-gutters" key={index}>
+                            <div className="col-11">
                                 <img src={this.state.items[index].photos[0]} className="img-fluid border"/>
                             </div>
+                            <OrderDel />
                         </div>
                     );
                 }
@@ -124,13 +140,18 @@ class Flow extends React.Component {
 
                 return (
                     // if already uploaded, show the files instead of inputs
-                    <div className="row justify-content-center my-3" key={index}>
-                        <div className="col-md-6">
-                            <img src={this.state.items[index].photos[0]} className="img-fluid border"/>
+                    <div className="row justify-content-center no-gutters my-3" key={index}>
+                        <div className="col-11">
+                            <div className="row no-gutters">
+                                <div className="col-6">
+                                    <img src={this.state.items[index].photos[0]} className="img-fluid border"/>
+                                </div>
+                                <div className="col-6">
+                                    <img src={this.state.items[index].photos[1]} className="img-fluid border"/>
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-md-6">
-                            <img src={this.state.items[index].photos[1]} className="img-fluid border"/>
-                        </div>
+                        <OrderDel />
                     </div>
                 );
                 }
@@ -149,21 +170,26 @@ class Flow extends React.Component {
                     return (
                         // if already uploaded, show the files instead of inputs
                         <div key={index}>
-                            <div className="row justify-content-center my-4">
-                                <div className="col-md-6">
-                                    <img src={this.state.items[index].photos[0]} className="img-fluid border"/>
+                            <div className="row justify-content-center no-gutters my-4">
+                                <div className="col-11">
+                                    <div class="row no-gutters">
+                                        <div className="col-6">
+                                            <img src={this.state.items[index].photos[0]} className="img-fluid border"/>
+                                        </div>
+                                        <div className="col-6">
+                                            <img src={this.state.items[index].photos[1]} className="img-fluid border"/>
+                                        </div>
+                                    </div>
+                                    <div className="row no-gutters">
+                                        <div className="col-6">
+                                            <img src={this.state.items[index].photos[2]} className="img-fluid border"/>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <img src={this.state.items[index].photos[3]} className="img-fluid border"/>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="col-md-6">
-                                    <img src={this.state.items[index].photos[1]} className="img-fluid border"/>
-                                </div>
-                            </div>
-                            <div className="row justify-content-center mb-3">
-                                <div className="col-md-6">
-                                    <img src={this.state.items[index].photos[2]} className="img-fluid border"/>
-                                </div>
-                                <div className="col-md-6">
-                                    <img src={this.state.items[index].photos[3]} className="img-fluid border"/>
-                                </div>
+                                <OrderDel />
                             </div>
                         </div>
                     );

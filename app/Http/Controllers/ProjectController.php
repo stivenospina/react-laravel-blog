@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\Item;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectController extends Controller
 {
@@ -16,9 +17,12 @@ class ProjectController extends Controller
 
     public function index()
     {
+       
+
         $projectsList = Project::where('projOrExp', '=', 'project')->get();
 
-        return view('projects.index', ['page' => 'projects', 'projects' => $projectsList]);
+            return view('projects.index', ['page' => 'projects', 'projects' => $projectsList]);
+        
     }
 
     public function experiencesIndex()
@@ -35,6 +39,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        Gate::authorize('admin');
+        
         return view('projects.create');
     }
 
@@ -46,6 +52,8 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('admin');
+
         // NOTE: NEEDS TO BE VALIDATED
         $newProject = new Project;
         $newProject->name = $request->input('name');
@@ -86,6 +94,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        Gate::authorize('admin');
         
         return view('projects.edit', [ 'project' => $project ]);
     }
@@ -99,6 +108,8 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
+        Gate::authorize('admin');
+
         // first determine is this is a title/main photo or a change to the project flow content
 
         if ($request->has('name')) {
@@ -218,6 +229,8 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        Gate::authorize('admin');
+        
         $project->delete();
 
         return redirect('/projects');

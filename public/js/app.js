@@ -65906,6 +65906,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _OrderDel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./OrderDel */ "./resources/js/components/OrderDel.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -65927,6 +65928,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -66065,23 +66067,31 @@ var Flow = /*#__PURE__*/function (_React$Component) {
       // create an array of element components
       var flowInputs = this.state.items.map(function (item, index) {
         if (item.type == 'paragraph') {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-            className: "form-control my-3",
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            "class": "row justify-content-center no-gutters my-3"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            "class": "col-11"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+            className: "form-control h-100",
             value: item.data,
             key: index,
             onChange: function onChange(e) {
               return _this3.handleTextChange(index, e);
             }
-          });
+          })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_OrderDel__WEBPACK_IMPORTED_MODULE_3__["default"], null));
         } else if (item.type == 'video') {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-            className: "form-control my-3",
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            "class": "row justify-content-center no-gutters my-3"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            "class": "col-11"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+            className: "form-control h-100",
             value: item.data,
             key: index,
             onChange: function onChange(e) {
               return _this3.handleTextChange(index, e);
             }
-          });
+          })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_OrderDel__WEBPACK_IMPORTED_MODULE_3__["default"], null));
         } else if (item.type == 'one') {
           if (item.photos.length == 0) {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -66096,14 +66106,14 @@ var Flow = /*#__PURE__*/function (_React$Component) {
               /*#__PURE__*/
               // if the item has already been uploaded, show the photo instead of browse
               react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                className: "row justify-content-center my-3",
+                className: "row justify-content-center my-3 no-gutters",
                 key: index
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                className: "col-12"
+                className: "col-11"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
                 src: _this3.state.items[index].photos[0],
                 className: "img-fluid border"
-              })))
+              })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_OrderDel__WEBPACK_IMPORTED_MODULE_3__["default"], null))
             );
           }
         } else if (item.type == 'two') {
@@ -66125,19 +66135,23 @@ var Flow = /*#__PURE__*/function (_React$Component) {
               /*#__PURE__*/
               // if already uploaded, show the files instead of inputs
               react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                className: "row justify-content-center my-3",
+                className: "row justify-content-center no-gutters my-3",
                 key: index
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                className: "col-md-6"
+                className: "col-11"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                className: "row no-gutters"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                className: "col-6"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
                 src: _this3.state.items[index].photos[0],
                 className: "img-fluid border"
               })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                className: "col-md-6"
+                className: "col-6"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
                 src: _this3.state.items[index].photos[1],
                 className: "img-fluid border"
-              })))
+              })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_OrderDel__WEBPACK_IMPORTED_MODULE_3__["default"], null))
             );
           }
         } else if (item.type == 'four') {
@@ -66168,21 +66182,25 @@ var Flow = /*#__PURE__*/function (_React$Component) {
               react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
                 key: index
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                className: "row justify-content-center my-4"
+                className: "row justify-content-center no-gutters my-4"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                className: "col-md-6"
+                className: "col-11"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                "class": "row no-gutters"
+              }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                className: "col-6"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
                 src: _this3.state.items[index].photos[0],
                 className: "img-fluid border"
               })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                className: "col-md-6"
+                className: "col-6"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
                 src: _this3.state.items[index].photos[1],
                 className: "img-fluid border"
               }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                className: "row justify-content-center mb-3"
+                className: "row no-gutters"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                className: "col-md-6"
+                className: "col-6"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
                 src: _this3.state.items[index].photos[2],
                 className: "img-fluid border"
@@ -66191,7 +66209,7 @@ var Flow = /*#__PURE__*/function (_React$Component) {
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
                 src: _this3.state.items[index].photos[3],
                 className: "img-fluid border"
-              }))))
+              })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_OrderDel__WEBPACK_IMPORTED_MODULE_3__["default"], null)))
             );
           }
         }
@@ -66256,6 +66274,38 @@ var Flow = /*#__PURE__*/function (_React$Component) {
 if (document.getElementById('flow')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Flow, null), document.getElementById('flow'));
 }
+
+/***/ }),
+
+/***/ "./resources/js/components/OrderDel.js":
+/*!*********************************************!*\
+  !*** ./resources/js/components/OrderDel.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+function OrderDel(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-1 align-self-center pl-2"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-arrow-alt-circle-up fa-2x pr-4 d-block"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-times-circle fa-2x d-block my-2"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-arrow-alt-circle-down fa-2x d-block"
+  }));
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (OrderDel);
 
 /***/ }),
 

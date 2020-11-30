@@ -29,8 +29,7 @@
 
 <body>
   <div id="app">
-    @guest
-    @else
+    @auth
     <div class="row justify-content-end mr-2">
       @section('edit/delete')
       @show
@@ -56,7 +55,7 @@
       </li>
     </div>
 
-    @endguest
+    @endauth
 
     <div class="text-center mt-2" style="padding: 1%;" id="top">
       <div class="container" style="width: 50%">

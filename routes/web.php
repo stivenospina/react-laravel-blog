@@ -19,6 +19,8 @@ use App\Http\Controllers\ExperienceController;
 
 Route::get('/', [ProjectController::class, 'index']);
 
+Route::get('/cms', [ProjectController::class, 'index'])->middleware('auth');
+
 Route::resource('projects', ProjectController::class);
 
 Route::get('/experiences', [ProjectController::class, 'experiencesIndex']);

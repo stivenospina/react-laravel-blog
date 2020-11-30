@@ -68,7 +68,7 @@ div.col-md a:hover {
 	width: 270px;
 }
 
-.square-wrapper:hover {
+.square-wrapper-hover:hover {
 	border-color: #CC0000 !important;
 }
 
@@ -85,10 +85,6 @@ div.new-article a {
 	text-decoration: none;
 }
 
-#main-photo-edit {
-	max-width: 250px;
-	max-height: 250px;
-}
 
 .dropdown-item:hover {
 	cursor: pointer;
@@ -106,6 +102,10 @@ div.new-article a {
 
 #edit-delete-buttons {
 	font-size: 21px;
+}
+
+.order-del-btn:hover {
+	cursor: pointer;
 }/*!
  * Font Awesome Free 5.15.1 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)

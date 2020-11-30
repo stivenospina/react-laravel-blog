@@ -9,6 +9,9 @@ class Flow extends React.Component {
         this.handleNewType = this.handleNewType.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleFlowSubmit = this.handleFlowSubmit.bind(this);
+        this.handleItemDel = this.handleItemDel.bind(this);
+        this.handleItemUp = this.handleItemUp.bind(this);
+        this.handleItemDown = this.handleItemDown.bind(this);
         this.flowForm = React.createRef();
         this.state = {
             project: {},
@@ -84,9 +87,33 @@ class Flow extends React.Component {
                     window.location.reload()
                 }
             })
-            .catch(err => {console.log(err)})
-        
+            .catch(err => {console.log(err)});
     }
+
+    handleItemDel(index) {
+        let newItemsArr = this.state.items.slice();
+        newItemsArr.splice(index,1);
+        this.setState({items: newItemsArr});
+    }
+
+    handleItemUp(index) {
+        if (index > 0) {
+            let newItemsArr = this.state.items.slice();
+            newItemsArr.splice(index, 1);
+            newItemsArr.splice(index - 1, 0, this.state.items[index]);
+            this.setState({ items: newItemsArr });
+        }
+    }
+
+    handleItemDown(index) {
+        if (index < this.state.items.length - 1) {
+            let newItemsArr = this.state.items.slice();
+            newItemsArr.splice(index, 1);
+            newItemsArr.splice(index + 1, 0, this.state.items[index]);
+            this.setState({ items: newItemsArr });
+        }
+    }
+
     render() {
 
         // create an array of element components
@@ -94,21 +121,21 @@ class Flow extends React.Component {
 
             if (item.type == 'paragraph') {
                 return (
-                    <div class="row justify-content-center no-gutters my-3">
-                        <div class="col-11">
-                            <textarea className="form-control h-100" value={item.data} key={index} onChange={(e) => this.handleTextChange(index, e)}></textarea>
+                    <div className="row justify-content-center no-gutters my-3" key={index}>
+                        <div className="col-11">
+                            <textarea className="form-control h-100" value={item.data} onChange={(e) => this.handleTextChange(index, e)}></textarea>
                         </div>
-                        <OrderDel />
+                        <OrderDel handleItemDel={this.handleItemDel.bind(this, index)} handleItemUp={this.handleItemUp.bind(this, index)} handleItemDown={this.handleItemDown.bind(this, index)}/>
                     </div>
                 );
 
             } else if (item.type == 'video') {
                 return (
-                    <div class="row justify-content-center no-gutters my-3">
-                        <div class="col-11">
-                            <textarea className="form-control h-100" value={item.data} key={index} onChange={(e) => this.handleTextChange(index, e)}></textarea>
+                    <div className="row justify-content-center no-gutters my-3" key={index}>
+                        <div className="col-11">
+                            <textarea className="form-control h-100" value={item.data} onChange={(e) => this.handleTextChange(index, e)}></textarea>
                         </div>
-                        <OrderDel />
+                        <OrderDel handleItemDel={this.handleItemDel.bind(this, index)} handleItemUp={this.handleItemUp.bind(this, index)} handleItemDown={this.handleItemDown.bind(this, index)}/>
                     </div>
                 );
 
@@ -122,7 +149,7 @@ class Flow extends React.Component {
                             <div className="col-11">
                                 <img src={this.state.items[index].photos[0]} className="img-fluid border"/>
                             </div>
-                            <OrderDel />
+                            <OrderDel handleItemDel={this.handleItemDel.bind(this, index)} handleItemUp={this.handleItemUp.bind(this, index)} handleItemDown={this.handleItemDown.bind(this, index)}/>
                         </div>
                     );
                 }
@@ -151,7 +178,7 @@ class Flow extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <OrderDel />
+                        <OrderDel handleItemDel={this.handleItemDel.bind(this, index)} handleItemUp={this.handleItemUp.bind(this, index)} handleItemDown={this.handleItemDown.bind(this, index)}/>
                     </div>
                 );
                 }
@@ -172,7 +199,7 @@ class Flow extends React.Component {
                         <div key={index}>
                             <div className="row justify-content-center no-gutters my-4">
                                 <div className="col-11">
-                                    <div class="row no-gutters">
+                                    <div className="row no-gutters">
                                         <div className="col-6">
                                             <img src={this.state.items[index].photos[0]} className="img-fluid border"/>
                                         </div>
@@ -189,7 +216,7 @@ class Flow extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                                <OrderDel />
+                                <OrderDel handleItemDel={this.handleItemDel.bind(this, index)} handleItemUp={this.handleItemUp.bind(this, index)} handleItemDown={this.handleItemDown.bind(this, index)}/>
                             </div>
                         </div>
                     );

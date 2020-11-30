@@ -65948,6 +65948,9 @@ var Flow = /*#__PURE__*/function (_React$Component) {
     _this.handleNewType = _this.handleNewType.bind(_assertThisInitialized(_this));
     _this.handleTextChange = _this.handleTextChange.bind(_assertThisInitialized(_this));
     _this.handleFlowSubmit = _this.handleFlowSubmit.bind(_assertThisInitialized(_this));
+    _this.handleItemDel = _this.handleItemDel.bind(_assertThisInitialized(_this));
+    _this.handleItemUp = _this.handleItemUp.bind(_assertThisInitialized(_this));
+    _this.handleItemDown = _this.handleItemDown.bind(_assertThisInitialized(_this));
     _this.flowForm = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.state = {
       project: {},
@@ -66060,6 +66063,39 @@ var Flow = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "handleItemDel",
+    value: function handleItemDel(index) {
+      var newItemsArr = this.state.items.slice();
+      newItemsArr.splice(index, 1);
+      this.setState({
+        items: newItemsArr
+      });
+    }
+  }, {
+    key: "handleItemUp",
+    value: function handleItemUp(index) {
+      if (index > 0) {
+        var newItemsArr = this.state.items.slice();
+        newItemsArr.splice(index, 1);
+        newItemsArr.splice(index - 1, 0, this.state.items[index]);
+        this.setState({
+          items: newItemsArr
+        });
+      }
+    }
+  }, {
+    key: "handleItemDown",
+    value: function handleItemDown(index) {
+      if (index < this.state.items.length - 1) {
+        var newItemsArr = this.state.items.slice();
+        newItemsArr.splice(index, 1);
+        newItemsArr.splice(index + 1, 0, this.state.items[index]);
+        this.setState({
+          items: newItemsArr
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -66068,30 +66104,38 @@ var Flow = /*#__PURE__*/function (_React$Component) {
       var flowInputs = this.state.items.map(function (item, index) {
         if (item.type == 'paragraph') {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            "class": "row justify-content-center no-gutters my-3"
+            className: "row justify-content-center no-gutters my-3",
+            key: index
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            "class": "col-11"
+            className: "col-11"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
             className: "form-control h-100",
             value: item.data,
-            key: index,
             onChange: function onChange(e) {
               return _this3.handleTextChange(index, e);
             }
-          })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_OrderDel__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+          })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_OrderDel__WEBPACK_IMPORTED_MODULE_3__["default"], {
+            handleItemDel: _this3.handleItemDel.bind(_this3, index),
+            handleItemUp: _this3.handleItemUp.bind(_this3, index),
+            handleItemDown: _this3.handleItemDown.bind(_this3, index)
+          }));
         } else if (item.type == 'video') {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            "class": "row justify-content-center no-gutters my-3"
+            className: "row justify-content-center no-gutters my-3",
+            key: index
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            "class": "col-11"
+            className: "col-11"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
             className: "form-control h-100",
             value: item.data,
-            key: index,
             onChange: function onChange(e) {
               return _this3.handleTextChange(index, e);
             }
-          })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_OrderDel__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+          })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_OrderDel__WEBPACK_IMPORTED_MODULE_3__["default"], {
+            handleItemDel: _this3.handleItemDel.bind(_this3, index),
+            handleItemUp: _this3.handleItemUp.bind(_this3, index),
+            handleItemDown: _this3.handleItemDown.bind(_this3, index)
+          }));
         } else if (item.type == 'one') {
           if (item.photos.length == 0) {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -66113,7 +66157,11 @@ var Flow = /*#__PURE__*/function (_React$Component) {
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
                 src: _this3.state.items[index].photos[0],
                 className: "img-fluid border"
-              })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_OrderDel__WEBPACK_IMPORTED_MODULE_3__["default"], null))
+              })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_OrderDel__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                handleItemDel: _this3.handleItemDel.bind(_this3, index),
+                handleItemUp: _this3.handleItemUp.bind(_this3, index),
+                handleItemDown: _this3.handleItemDown.bind(_this3, index)
+              }))
             );
           }
         } else if (item.type == 'two') {
@@ -66151,7 +66199,11 @@ var Flow = /*#__PURE__*/function (_React$Component) {
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
                 src: _this3.state.items[index].photos[1],
                 className: "img-fluid border"
-              })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_OrderDel__WEBPACK_IMPORTED_MODULE_3__["default"], null))
+              })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_OrderDel__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                handleItemDel: _this3.handleItemDel.bind(_this3, index),
+                handleItemUp: _this3.handleItemUp.bind(_this3, index),
+                handleItemDown: _this3.handleItemDown.bind(_this3, index)
+              }))
             );
           }
         } else if (item.type == 'four') {
@@ -66186,7 +66238,7 @@ var Flow = /*#__PURE__*/function (_React$Component) {
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
                 className: "col-11"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-                "class": "row no-gutters"
+                className: "row no-gutters"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
                 className: "col-6"
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -66209,7 +66261,11 @@ var Flow = /*#__PURE__*/function (_React$Component) {
               }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
                 src: _this3.state.items[index].photos[3],
                 className: "img-fluid border"
-              })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_OrderDel__WEBPACK_IMPORTED_MODULE_3__["default"], null)))
+              })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_OrderDel__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                handleItemDel: _this3.handleItemDel.bind(_this3, index),
+                handleItemUp: _this3.handleItemUp.bind(_this3, index),
+                handleItemDown: _this3.handleItemDown.bind(_this3, index)
+              })))
             );
           }
         }
@@ -66297,11 +66353,14 @@ function OrderDel(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-1 align-self-center pl-2"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-arrow-alt-circle-up fa-2x pr-4 d-block"
+    className: "fas fa-arrow-alt-circle-up fa-2x pr-4 d-block order-del-btn",
+    onClick: props.handleItemUp
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-times-circle fa-2x d-block my-2"
+    className: "fas fa-times-circle fa-2x d-block my-2 order-del-btn",
+    onClick: props.handleItemDel
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-arrow-alt-circle-down fa-2x d-block"
+    className: "fas fa-arrow-alt-circle-down fa-2x d-block order-del-btn",
+    onClick: props.handleItemDown
   }));
 }
 

@@ -6,6 +6,8 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
+
 
 class ProjectController extends Controller
 {
@@ -63,7 +65,7 @@ class ProjectController extends Controller
         if ($request->hasFile('main-photo')) {
             $mainPhoto = $request->file('main-photo');
             $path = $mainPhoto->store('public/images');
-            $pathModified = str_replace('public','storage', $path); // store the correct dir
+            $pathModified = str_replace('public','/storage', $path); // store the correct dir
             $newProject->mainPhoto = $pathModified;
         }
 
@@ -143,16 +145,6 @@ class ProjectController extends Controller
             $reqItemsArr = json_decode($request->input('items'), true);
 
             
-
-            // get an array of all the files sent in the request
-            $files = $request->file();
-            
-
-            // get the most up to date items array for this project from DB
-            $currentItemsArr = $project->Item->sortBy('order');
-            
-
-            
             // handle each of the flow items sent in the request
             forEach($reqItemsArr as $key => $item) {
                 
@@ -200,22 +192,34 @@ class ProjectController extends Controller
                                 $photoPathsArr[] = $pathModified;
                             }
                             
+                        } else {
 
-                            // create the new item in the db
-                            Item::updateOrCreate(
-                                ['project_id' => $project->id, 'order' => $item['order']],
-                                [
-                                'photos' => $photoPathsArr,
-                                'project_id' => $project->id,
-                                'type' => $reqItemsArr[$key]['type'],
-                                'order' => $reqItemsArr[$key]['order'],
-                                'data' => ''
-                            ]);
+                            // this item's photos already exist and just need passing on
+                            $photoPathsArr = $item['photos'];
                         }
+
+                        // update item or create the new photos item in the db
+                        Item::updateOrCreate(
+                            ['project_id' => $project->id, 'order' => $item['order']],
+                            [
+                            'photos' => $photoPathsArr,
+                            'project_id' => $project->id,
+                            'type' => $reqItemsArr[$key]['type'],
+                            'order' => $reqItemsArr[$key]['order'],
+                            'data' => ''
+                        ]);
+                        
                         break;
                 }
                 
             }
+
+
+            // Delete any excess Items not in the reqItemsArr
+            $this->deleteExcessItems($project->id, count($reqItemsArr));
+
+            // clean up excess photo files if any were deleted
+            $this->cleanUpPhotos();
 
             return 'success';
         }
@@ -234,5 +238,45 @@ class ProjectController extends Controller
         $project->delete();
 
         return redirect('/projects');
+    }
+
+    private function deleteExcessItems($projectId, $lastOrder)
+    {
+        Gate::authorize('admin');
+
+        $itemsToDel = Item::where([
+            ['project_id', '=', $projectId],
+            ['order', '>', $lastOrder]
+            ])->delete();
+       
+    }
+
+    private function cleanUpPhotos() {
+        // get an array of all files in the images folder
+        $directory = 'public/images';
+        $dirFiles = Storage::files($directory);
+        //return dd($dirFiles);
+
+        // get an array of all project/experience photos then flatten it into a single arr
+        $projectFiles = Item::all()->pluck('photos')->flatten()->toArray();
+        $mainPhotoFiles = Project::all()->pluck('mainPhoto')->flatten()->toArray();
+        $dbFiles = array_merge($projectFiles, $mainPhotoFiles);
+        
+        $unassociatedFiles = array_filter($dirFiles, function($dirFile) use ($dbFiles) {
+            $dirFile = str_replace('public','/storage', $dirFile); // get it same as dbFiles for comparison
+            
+            // compare the files to filter the array of files that are part of current projects leaving only the files that are unossociated and should be removed
+            foreach ($dbFiles as $dbFile) {
+                if ($dbFile == $dirFile) {
+                    return false; // false so that it is not included in the list
+                    break;
+                }
+            }
+            return true; // there were no matching files in the DB, add file to the delete list
+        });
+
+        // delete unassociated photos files left in the array by passing it per Docs
+        Storage::delete($unassociatedFiles);
+
     }
 }

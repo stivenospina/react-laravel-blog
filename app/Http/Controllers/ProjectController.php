@@ -260,7 +260,6 @@ class ProjectController extends Controller
         // get an array of all project/experience photos then flatten it into a single arr
         $projectFiles = Item::all()->pluck('photos')->flatten()->toArray();
         $mainPhotoFiles = Project::all()->pluck('mainPhoto')->flatten()->toArray();
-        return dd($mainPhotoFiles);
         $dbFiles = array_merge($projectFiles, $mainPhotoFiles);
         
         $unassociatedFiles = array_filter($dirFiles, function($dirFile) use ($dbFiles) {

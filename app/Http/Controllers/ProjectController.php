@@ -125,8 +125,8 @@ class ProjectController extends Controller
             // validate then handle the file
             if ($request->hasFile('main-photo')) {
                 $mainPhoto = $request->file('main-photo');
-                $path = $mainPhoto->store('/public/images');
-                $pathModified = str_replace('public','storage', $path); // store the correct dir
+                $path = $mainPhoto->store('public/images');
+                $pathModified = str_replace('public','/storage', $path); // store the correct dir
                 $project->mainPhoto = $pathModified;
             }
 

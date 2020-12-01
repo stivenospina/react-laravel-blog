@@ -15,7 +15,7 @@
     <div class="row justify-content-center">
         @foreach($projects as $project)
         <div class="col-12 col-sm-6 col-lg-4 mt-4 text-center">
-            <a href="projects/{{ $project->id }}" class="text-dark link-to-project">
+            <a href="projects/{{ $project->id }}" class="link-to-project">
                 <div class="square-wrapper border rounded mx-auto shadow-sm square-wrapper-hover">
                     <img src="{{ $project->mainPhoto }}" alt="{{ $project->name }}" class="img2rows">
                 </div>

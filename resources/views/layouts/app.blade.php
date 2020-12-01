@@ -86,7 +86,7 @@
     </ul>
     <br>
 
-    <main class="py-4">
+    <main class="py-4 mx-2 mx-md-0">
       @yield('content')
     </main>
 

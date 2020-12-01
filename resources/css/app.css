@@ -74,6 +74,11 @@ div.col-md a:hover {
 
 .link-to-project:hover {
 	text-decoration: none;
+	color: #CC0000 !important;
+}
+
+.link-to-project {
+	color: #101010;
 }
 
 div.col-md a p {

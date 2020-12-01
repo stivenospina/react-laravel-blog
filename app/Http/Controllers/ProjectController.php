@@ -125,7 +125,7 @@ class ProjectController extends Controller
             // validate then handle the file
             if ($request->hasFile('main-photo')) {
                 $mainPhoto = $request->file('main-photo');
-                $path = $mainPhoto->store('public/images');
+                $path = $mainPhoto->store('/public/images');
                 $pathModified = str_replace('public','storage', $path); // store the correct dir
                 $project->mainPhoto = $pathModified;
             }
@@ -260,6 +260,7 @@ class ProjectController extends Controller
         // get an array of all project/experience photos then flatten it into a single arr
         $projectFiles = Item::all()->pluck('photos')->flatten()->toArray();
         $mainPhotoFiles = Project::all()->pluck('mainPhoto')->flatten()->toArray();
+        return dd($mainPhotoFiles);
         $dbFiles = array_merge($projectFiles, $mainPhotoFiles);
         
         $unassociatedFiles = array_filter($dirFiles, function($dirFile) use ($dbFiles) {

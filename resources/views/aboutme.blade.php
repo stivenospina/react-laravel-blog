@@ -18,8 +18,15 @@
     <p class="my-3 paragraph">As my coding journey advanced, the site was improved with PHP which allowed for modularity of parts and less repetitive lines of code. Still though, adding new projects and pages needed lots of boilerplate and repitition. I needed a content management system to solve this problem. So I built one! The front end is a bit of React and Bootstrap. The back end is Laravel (still PHP but a more robust framework). Project data and photos are uploaded to the back end and stored in a SQLite database. Most of the front end pages are templates rendered with dynamic content with the ability to add, delete, and customize project data and appearance without the need to write any more lines of code.
 
       <p class="my-3 paragraph">I now have a more easy to manage, more centralized portfolio for projects outside of web development. For more programming stuff and to see some even cooler web projects, please take a look at my <a href="http://kyleweb.dev">Web Dev Portfolio</a> or follow the link in the top. If you need some web work done, don't be shy! Contact me through my <a href="http://kyleweb.dev/#contact">contact form</a> and I will get right back with you! By the way, thanks for visiting the site!!!</p>
-      <p class="text-center mt-2 my-3"><img src="{{ asset('photos/kyleprofesional2.jpg') }}" class="w-25 rounded border shadow mr-3"> - Sincerely, Kyle </p>
-      <br>
+      <div class="row justify-content-center align-items-end no-gutters mt-3">
+        <div class="col text-right">
+          <img src="{{ asset('photos/kyleprofesional2.jpg') }}" class="w-50 rounded border shadow">
+        </div>
+        <div class="col">
+          <div class="h4 pl-4">Sincerely,</div>
+          <div class="h4 pb-4 pl-4 ml-2">-- Kyle</div>
+        </div>
+      </div>
   </div>
 </div>
 @endsection

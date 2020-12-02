@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => config('app.ADMIN_NAME'),
             'email' => config('app.ADMIN_EMAIL'),
-            'password' => Hash::make(config('app.ADMIN_PASS')),
+            'password' => config('app.ADMIN_PASS'),
         ]);
     }
 }

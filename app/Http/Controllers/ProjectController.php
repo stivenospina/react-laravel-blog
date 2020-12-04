@@ -85,7 +85,10 @@ class ProjectController extends Controller
     {
         $page = 'projects';
 
-        return view('projects.show', compact('page','project'));
+        // add pagination to the items array to only show 17 per page
+        $items = $project->Item()->paginate(17);
+
+        return view('projects.show', compact('page','project','items'));
     }
 
     /**

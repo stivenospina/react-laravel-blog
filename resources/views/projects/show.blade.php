@@ -17,7 +17,7 @@
         <br>
         <h2 class="index-header text-danger mb-1">{{ $project->name }}</h2>
     </div>
-    @foreach($project->item as $item)
+    @foreach($items as $item)
     <div class="row justify-content-center">
         @if($item->type == 'paragraph')
         <div class="row mt-1 mx-2">
@@ -79,6 +79,13 @@
     </div>
     @endforeach
 
+    {{-- display the paginated links --}}
+    <div class="row justify-content-center my-4">
+        {{ $items->links() }}
+    </div>
+
+    {{-- display the thanks and comment area if on last pagination page --}}
+    @if( !$items->hasMorePages() )
     <p class="text-center mt-2">Thanks for reading and feel free to comment below!</p>
     <br>
     <hr>
@@ -92,6 +99,8 @@
 <div class="container px-md-5">
     <div id="disqus_thread"></div>
 </div>
+@endif
+
 <script>
     /**
      *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.

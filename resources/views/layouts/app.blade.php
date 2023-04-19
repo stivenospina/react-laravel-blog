@@ -65,11 +65,11 @@
       <div class="container" style="width: 50%">
         <div class="row align-items-center">
           <div class="col-md-12">
-            <h1 class="text-nowrap text-danger">a lazy</h1>
+            <h1 class="text-nowrap text-danger">kyle's</h1>
           </div>
           <div class="col-md-12"><img src="{{ asset('photos/kyle2.jpg') }}" alt="Kyle" class="rounded-circle header-small-img  border border-danger"></div>
           <div class="col-md-12">
-            <h1 class="text-danger">millennial</h1>
+            <h1 class="text-danger">projects blog</h1>
           </div>
         </div>
       </div>
